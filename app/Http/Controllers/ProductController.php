@@ -61,40 +61,33 @@ class ProductController extends Controller
       }
     }
 
-    public function update (Request $request, $id)
+    public function update (Request $request, Product $product)
     {
-      try {
-        $product = Product::findOrFail($id);
-  
-        $body = $request->validate([
-          'name' => 'required',
-          'description' => 'required',
-          'price' => 'required|numeric',
-          'stock' => 'required|numeric',
-          'status_id' => 'required|numeric',
-          'category_id' => 'required|numeric'
-        ]);
-  
-        $product->update($body);
-  
-        return $product;
-      } catch (ModelNotFoundException $e) {
-        return response()->json(['message' => 'Product not found'], 404);
-      }
+      $body = $request->validate([
+        'name' => 'required',
+        'description' => 'required',
+        'price' => 'required|numeric',
+        'stock' => 'required|numeric',
+        'status_id' => 'required|numeric',
+        'category_id' => 'required|numeric'
+      ]);
+
+      $product->update($body);
+
+      return [
+        "error" => null,
+        "data" => $product,
+      ];
     }
 
-    public function destroy (Request $request, $id)
+    public function destroy (Product $product)
     {
-      try {
-        $product = Product::findOrFail($id);
-  
-        // Agregar el valor de la fecha de eliminación a la columna deleted_at
         $product->delete();
   
-        return $product;
-      } catch (ModelNotFoundException $e) {
-        return response()->json(['message' => 'Product not found'], 404);
-      }
+        return [
+          "error" => null,
+          "data" => $product,
+        ];
     }
 
     public function restore (Request $request, $id)
