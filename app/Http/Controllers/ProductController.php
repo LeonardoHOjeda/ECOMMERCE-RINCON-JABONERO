@@ -92,15 +92,11 @@ class ProductController extends Controller
 
     public function restore (Request $request, $id)
     {
-      try {
-        $product = Product::withTrashed()->findOrFail($id);
-  
-        // Restaurar el producto eliminado
-        $product->restore();
-  
-        return $product;
-      } catch (ModelNotFoundException $e) {
-        return response()->json(['message' => 'Product not found'], 404);
-      }
+      $product = Product::withTrashed()->findOrFail($id);
+
+      // Restaurar el producto eliminado
+      $product->restore();
+
+      return $product;
     }
 }
