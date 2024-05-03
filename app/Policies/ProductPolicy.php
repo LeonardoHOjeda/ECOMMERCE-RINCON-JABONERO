@@ -46,7 +46,7 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product): bool
     {
-        //
+        return $user->hasRole(Role::ADMIN);
     }
 
     /**
@@ -54,7 +54,7 @@ class ProductPolicy
      */
     public function restore(User $user, Product $product): bool
     { 
-        //
+        return $user->hasRole(Role::ADMIN);
     }
 
     /**

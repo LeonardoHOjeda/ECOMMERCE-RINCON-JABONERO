@@ -73,6 +73,8 @@ class ProductController extends Controller
 
     public function destroy (Product $product)
     {
+        Gate::authorize('delete', $product);
+
         $product->delete();
   
         return $product;
@@ -80,6 +82,8 @@ class ProductController extends Controller
 
     public function restore (Request $request, string $id)
     {
+      Gate::authorize('restore', Product::class);
+      
       $product = Product::withTrashed()->findOrFail($id);
 
       // Restaurar el producto eliminado
