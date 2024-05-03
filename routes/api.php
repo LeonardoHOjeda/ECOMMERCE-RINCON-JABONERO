@@ -20,25 +20,43 @@ require __DIR__.'/auth.php';
 
 
 // Rutas Publicas
+
+/* Productos */
 Route::get('/products/published', [ProductController::class, 'publishedProducts']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
+/* Categorias */
+Route::get('/category', [CategoryController::class, 'index'] );
+
+
 // Rutas Protegidas
 Route::middleware(['auth:sanctum'])->group(function() {
+  /*
+  |--------------------------------------------------------------------------
+  | PRODUCTOS
+  |--------------------------------------------------------------------------
+  */
   Route::get('/products', [ProductController::class, 'index']);
   Route::post('/products', [ProductController::class, 'store']);
   Route::put('/products/{product}', [ProductController::class, 'update']);
   Route::delete('/products/{product}', [ProductController::class, 'destroy']);
   Route::put('/products/restore/{product}', [ProductController::class, 'restore']);
+
+  /*
+  |--------------------------------------------------------------------------
+  | USUARIOS
+  |--------------------------------------------------------------------------
+  */
+  Route::get('/users', [UserController::class, 'index']);
+  Route::post('/user', [UserController::class, 'update']);
+
+  /*
+  |--------------------------------------------------------------------------
+  | CATEGORIAS
+  |--------------------------------------------------------------------------
+  */
+  Route::post('/category', [CategoryController::class, 'store']);
+  Route::put('/category/{id}', function($id) {return 'Category Updated ' . $id;});
+  Route::delete('/category/{id}', function($id) {return 'Category Deleted ' . $id;});
+
 });
-/*  Productos */
-
-/* Usuarios */
-
-Route::get('/users', [UserController::class, 'index']);
-Route::post('/users', [UserController::class, 'store']);
-/* Categorias */
-Route::get('/category', [CategoryController::class, 'index'] );
-Route::post('/category', [CategoryController::class, 'store']);
-Route::put('/category/{id}', function($id) {return 'Category Updated ' . $id;});
-Route::delete('/category/{id}', function($id) {return 'Category Deleted ' . $id;});

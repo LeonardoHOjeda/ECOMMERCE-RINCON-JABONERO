@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -83,7 +82,7 @@ class ProductController extends Controller
     public function restore (Request $request, string $id)
     {
       Gate::authorize('restore', Product::class);
-      
+
       $product = Product::withTrashed()->findOrFail($id);
 
       // Restaurar el producto eliminado
