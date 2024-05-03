@@ -20,17 +20,18 @@ require __DIR__.'/auth.php';
 
 
 // Rutas Publicas
+Route::get('/products/published', [ProductController::class, 'publishedProducts']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
 
 // Rutas Protegidas
-
+Route::middleware(['auth:sanctum'])->group(function() {
+  Route::get('/products', [ProductController::class, 'index']);
+  Route::post('/products', [ProductController::class, 'store']);
+  Route::put('/products/{product}', [ProductController::class, 'update']);
+  Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+  Route::put('/products/restore/{product}', [ProductController::class, 'restore']);
+});
 /*  Productos */
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/published', [ProductController::class, 'publishedProducts']);
-Route::post('/products', [ProductController::class, 'store']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::put('/products/{product}', [ProductController::class, 'update']);
-Route::delete('/products/{product}', [ProductController::class, 'destroy']);
-Route::put('/products/restore/{product}', [ProductController::class, 'restore']);
 
 /* Usuarios */
 

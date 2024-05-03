@@ -12,14 +12,9 @@ class ProductController extends Controller
     {
       $products = Product::with('category', 'status')->get();
 
-      if ($products->isEmpty()) {
-        return response()->json(['message' => 'No products found'], 200);
-      }
-
-      return response()->json($products, 200);
+      return $products;
     }
 
-    // Obtener todos los productos publicados y no eliminados 
     public function publishedProducts ()
     {
       $products = Product::with('category', 'status')
@@ -27,11 +22,7 @@ class ProductController extends Controller
         ->whereNull('deleted_at')
         ->get();
 
-      if ($products->isEmpty()) {
-        return response()->json(['message' => 'No products found'], 200);
-      }
-
-      return response()->json($products, 200);
+      return $products;
     }
 
     public function show (Request $request, $id)
@@ -52,13 +43,9 @@ class ProductController extends Controller
         'category_id' => 'required|numeric'
       ]);
 
-      try {
-        $product = Product::create($body);
+      $product = Product::create($body);
 
-        return response()->json($product, 201);
-      } catch (\Throwable $th) {
-        throw $th;
-      }
+      return $product;
     }
 
     public function update (Request $request, Product $product)
@@ -74,23 +61,17 @@ class ProductController extends Controller
 
       $product->update($body);
 
-      return [
-        "error" => null,
-        "data" => $product,
-      ];
+      return $product;
     }
 
     public function destroy (Product $product)
     {
         $product->delete();
   
-        return [
-          "error" => null,
-          "data" => $product,
-        ];
+        return $product;
     }
 
-    public function restore (Request $request, $id)
+    public function restore (Request $request, string $id)
     {
       $product = Product::withTrashed()->findOrFail($id);
 

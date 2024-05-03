@@ -14,12 +14,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        if ($categories->isEmpty()) {
-          
-            return response()->json(['message' => 'No categories found'], 200);
-        }
-
-        return response()->json($categories, 200);
+        return $categories;
     }
 
     /**
@@ -32,13 +27,9 @@ class CategoryController extends Controller
             'description' => 'required'
         ]);
 
-        try {
-          $category = Category::create($body);
+        $category = Category::create($body);
 
-          return response()->json($category, 201);
-        } catch (\Throwable $th) {
-          throw $th;
-        }
+        return $category;
     }
 
     /**
