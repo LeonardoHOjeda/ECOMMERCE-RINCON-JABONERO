@@ -70,7 +70,7 @@ return Application::configure(basePath: dirname(__DIR__))
           ], 500);
         }
       });
-
+      
       $exceptions->reportable(function (Throwable $e) {
         Log::error($e->getMessage());
       });

@@ -39,13 +39,6 @@ Route::get('/users', [UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 /* Categorias */
 Route::get('/category', [CategoryController::class, 'index'] );
-
-Route::get('/category/{id}', function($id) {
-  return 'Category Detail ' . $id;
-});
-
 Route::post('/category', [CategoryController::class, 'store']);
-
 Route::put('/category/{id}', function($id) {return 'Category Updated ' . $id;});
-
 Route::delete('/category/{id}', function($id) {return 'Category Deleted ' . $id;});
