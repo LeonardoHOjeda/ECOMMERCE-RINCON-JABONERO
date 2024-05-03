@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
     public function index ()
     {
+      Gate::authorize('viewAny', Product::class);
+
       $products = Product::with('category', 'status')->get();
 
       return $products;
@@ -34,6 +37,8 @@ class ProductController extends Controller
 
     public function store (Request $request)
     {
+      Gate::authorize('create', Product::class);
+
       $body = $request->validate([
         'name' => 'required',
         'description' => 'required',
@@ -50,6 +55,8 @@ class ProductController extends Controller
 
     public function update (Request $request, Product $product)
     {
+      Gate::authorize('update', $product);
+
       $body = $request->validate([
         'name' => 'required',
         'description' => 'required',

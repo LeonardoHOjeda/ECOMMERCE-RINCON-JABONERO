@@ -22,6 +22,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
     ];
 
+    protected $attributes = [
+        'role_id' => 2,
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -43,5 +47,15 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function role()
+    {
+      return $this->belongsTo(Role::class);
+    }
+
+    public function hasRole(int $role)
+    {
+      return $this->role->id === $role;
     }
 }

@@ -50,6 +50,13 @@ class AuthController extends Controller
       ], 401);
     }
 
+    // Error si el correo no ha sido verificado
+    if (!Auth::user()->hasVerifiedEmail()) {
+      return response()->json([
+        'message' => 'Correo no verificado'
+      ], 401);
+    }
+
     $user = Auth::user();
 
     $token = $user->createToken('authToken')->plainTextToken;

@@ -17,6 +17,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+      if (!SeederModel::where('name', RoleSeeder::class)->exists()) {
+        $this->call(RoleSeeder::class);
+        SeederModel::create(['name' => RoleSeeder::class]);
+      }
+
+      if (!SeederModel::where('name', UserSeeder::class)->exists()) {
+        $this->call(UserSeeder::class);
+        SeederModel::create(['name' => UserSeeder::class]);
+      }
+
       if (!SeederModel::where('name', CategorySeeder::class)->exists()) {
         $this->call(CategorySeeder::class);
         SeederModel::create(['name' => CategorySeeder::class]);

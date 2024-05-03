@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
-            $table->timestamp('last_login')->nullable();
+            $table->foreignId('role_id')->constrained()->default('2');
             $table->timestamps();
+            $table->timestamp('last_login')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

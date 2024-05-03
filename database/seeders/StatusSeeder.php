@@ -26,7 +26,7 @@ class StatusSeeder extends Seeder
         ]);
 
         Status::create([
-            'name' => 'Eliminado'
+            'name' => 'Sin stock'
         ]);
     }
 }
