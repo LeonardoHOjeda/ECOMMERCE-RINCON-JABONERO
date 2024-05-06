@@ -11,6 +11,13 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      */
+    public function before (User $user)
+    {
+      if ($user->hasRole(Role::ADMIN)) {
+        return true;
+      }
+    }
+    
     public function viewAny(User $user): bool
     {
       return $user->hasRole(Role::ADMIN);

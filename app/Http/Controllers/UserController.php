@@ -61,6 +61,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        Gate::authorize('update', $user);
+        
         $body = $request->validate([
           'name' => 'nullable|string',
           'lastname' => 'nullable|string',
@@ -74,17 +76,12 @@ class UserController extends Controller
           $body['password'] = Hash::make($body['password']);
         }
 
-        if(isset($body['role_id'])) {
-          $currentUser = User::find(Auth::id());
-
-          if ($currentUser->hasRole(Role::ADMIN))
-            $user->role_id = $body['role_id'];
-          else
-            unset($body['role_id']);
+        if(isset($body['role_id']) && !$user->hasRole(Role::ADMIN)) {
+            abort(403, 'Unauthorized');
         }
 
-        $user->load('role');
         $user->update($body);
+        $user->refresh();
 
         return $user;
     }
