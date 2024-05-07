@@ -11,5 +11,7 @@ class StatusOrder extends Model
 
     protected $table = 'status_orders';
 
+    public $timestamps = false;
+
     protected $fillable = ['name'];
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -37,11 +38,21 @@ class DatabaseSeeder extends Seeder
         SeederModel::create(['name' => StatusSeeder::class]);
       }
 
+      if (!SeederModel::where('name', StatusOrderSeeder::class) ->exists()) {
+        $this->call(StatusOrderSeeder::class);
+        SeederModel::create(['name' => StatusOrderSeeder::class]);
+      }
+
       if (App::environment('local')) {
-        // Ejecutar los seeders de desarrollo como factories
+
         if (!SeederModel::where('name', Product::class)->exists()) {
           Product::factory(30)->create();
           SeederModel::create(['name' => Product::class]);
+        }
+
+        if (!SeederModel::where('name', Order::class)->exists()) {
+          Order::factory(100)->create();
+          SeederModel::create(['name' => Order::class]);
         }
       }
     }

@@ -57,12 +57,12 @@ class ProductController extends Controller
       Gate::authorize('update', $product);
 
       $body = $request->validate([
-        'name' => 'required',
-        'description' => 'required',
-        'price' => 'required|numeric',
-        'stock' => 'required|numeric',
-        'status_id' => 'required|numeric',
-        'category_id' => 'required|numeric'
+        'name' => 'string',
+        'description' => 'string',
+        'price' => 'numeric',
+        'stock' => 'integer',
+        'status_id' => 'integer',
+        'category_id' => 'integer'
       ]);
 
       $product->update($body);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -55,8 +56,17 @@ Route::middleware(['auth:sanctum'])->group(function() {
   | CATEGORIAS
   |--------------------------------------------------------------------------
   */
+  // TODO: Cambiar a Model Binding
   Route::post('/category', [CategoryController::class, 'store']);
   Route::put('/category/{id}', function($id) {return 'Category Updated ' . $id;});
   Route::delete('/category/{id}', function($id) {return 'Category Deleted ' . $id;});
-
+  
+  /*
+  |--------------------------------------------------------------------------
+  | ORDENES
+  |--------------------------------------------------------------------------
+  */
+  Route::get('/orders', [OrderController::class, 'index']);
+  Route::post('/orders', [OrderController::class, 'store']);
+  Route::get('/orders/{order}', [OrderController::class, 'show']);
 });

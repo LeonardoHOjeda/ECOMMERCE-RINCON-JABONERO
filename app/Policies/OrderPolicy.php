@@ -2,12 +2,13 @@
 
 namespace App\Policies;
 
-use App\Models\Product;
+use App\Models\Order;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
-class ProductPolicy
+class OrderPolicy
 {
     /**
      * Perform pre-authorization checks.
@@ -24,46 +25,54 @@ class ProductPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(Role::ADMIN);
+      //
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Product $product): bool
+    public function view(User $user, Order $order): bool
     {
-        //
+        return $user->id == $order->user_id;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, User $orderUser): bool
     {
-        return false;
+      return $user->id == $orderUser->id;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Product $product): bool
+    public function update(User $user, Order $order): bool
     {
-        return $user->hasRole(Role::ADMIN);
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Product $product): bool
+    public function delete(User $user, Order $order): bool
     {
-        return $user->hasRole(Role::ADMIN);
+        return $user->id === $order->user_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Product $product): bool
-    { 
-        return $user->hasRole(Role::ADMIN);
+    public function restore(User $user, Order $order): bool
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, Order $order): bool
+    {
+        //
     }
 }

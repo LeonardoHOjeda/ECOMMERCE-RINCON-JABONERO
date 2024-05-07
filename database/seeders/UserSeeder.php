@@ -32,5 +32,16 @@ class UserSeeder extends Seeder
             'password' => Hash::make('RinconJabonero2024'),
             'role_id' => Role::USER
         ]);
+
+        User::create([
+            'name' => 'Margot',
+            'lastname' => 'Robbie',
+            'email' => 'margot.robbie@rinconjabonero.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('RinconJabonero2024'),
+            'role_id' => Role::USER
+        ]);
+
+
     }
 }
