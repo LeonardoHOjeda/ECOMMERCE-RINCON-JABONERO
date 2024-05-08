@@ -58,8 +58,8 @@ Route::middleware(['auth:sanctum'])->group(function() {
   */
   // TODO: Cambiar a Model Binding
   Route::post('/category', [CategoryController::class, 'store']);
-  Route::put('/category/{id}', function($id) {return 'Category Updated ' . $id;});
-  Route::delete('/category/{id}', function($id) {return 'Category Deleted ' . $id;});
+  Route::put('/category/{category}', [CategoryController::class, 'update']);
+  Route::delete('/category/{category}', [CategoryController::class, 'destroy']);
   
   /*
   |--------------------------------------------------------------------------
@@ -69,4 +69,5 @@ Route::middleware(['auth:sanctum'])->group(function() {
   Route::get('/orders', [OrderController::class, 'index']);
   Route::post('/orders', [OrderController::class, 'store']);
   Route::get('/orders/{order}', [OrderController::class, 'show']);
+  Route::put('/orders/{order}', [OrderController::class, 'update']);
 });

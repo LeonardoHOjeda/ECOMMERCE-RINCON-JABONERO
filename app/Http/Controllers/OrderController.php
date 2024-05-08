@@ -60,14 +60,20 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Order $order)
     {
-        $body = $request->validate([
-          'order_total' => 'numeric',
-          'tracking_number' => 'required',
-          'user_id' => 'required|numeric',
-          'status_order_id' => 'required|numeric'
-        ]);
+      Gate::authorize('update', $order);
+
+      $body = $request->validate([
+        'order_total' => 'numeric',
+        'tracking_number' => 'string',
+        'user_id' => 'integer',
+        'status_order_id' => 'integer'
+      ]);
+
+      $order->update($body);
+
+      return $order;
     }
 
     /**

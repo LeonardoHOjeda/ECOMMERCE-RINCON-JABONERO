@@ -25,7 +25,7 @@ class OrderPolicy
      */
     public function viewAny(User $user): bool
     {
-      //
+      return false;
     }
 
     /**
@@ -57,7 +57,7 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order): bool
     {
-        return $user->id === $order->user_id;
+        return false;
     }
 
     /**
@@ -65,7 +65,7 @@ class OrderPolicy
      */
     public function restore(User $user, Order $order): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -73,6 +73,6 @@ class OrderPolicy
      */
     public function forceDelete(User $user, Order $order): bool
     {
-        //
+        return false;
     }
 }
