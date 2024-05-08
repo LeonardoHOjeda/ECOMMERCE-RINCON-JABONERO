@@ -27,7 +27,7 @@ class ProductController extends Controller
       return $products;
     }
 
-    public function show (Request $request, $id)
+    public function show ($id)
     {
       $product = Product::with('category', 'status')->findOrFail($id);
 

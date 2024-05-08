@@ -28,6 +28,7 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 
 /* Categorias */
 Route::get('/category', [CategoryController::class, 'index'] );
+Route::get('/category/{category}', [CategoryController::class, 'show'] );
 
 
 // Rutas Protegidas

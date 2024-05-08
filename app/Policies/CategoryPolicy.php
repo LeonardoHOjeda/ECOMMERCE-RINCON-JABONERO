@@ -9,6 +9,13 @@ use Illuminate\Auth\Access\Response;
 
 class CategoryPolicy
 {
+    
+    public function before (User $user)
+    {
+      if ($user->hasRole(Role::ADMIN)) {
+        return true;
+      }
+    }
     /**
      * Determine whether the user can view any models.
      */
@@ -30,7 +37,7 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-      return $user->hasRole(Role::ADMIN);
+      return false;
     }
 
     /**
@@ -38,7 +45,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category): bool
     {
-      return $user->hasRole(Role::ADMIN);
+      return false;
     }
 
     /**
