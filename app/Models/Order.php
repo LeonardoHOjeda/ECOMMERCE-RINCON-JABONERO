@@ -27,4 +27,20 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function products ()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    protected static function booted ()
+    {
+        static::creating(function ($order) {
+          $lastOrderNumber = Order::max('order_number');
+          $orderNumber = $lastOrderNumber ? substr($lastOrderNumber, 2) : null;
+          $nextOrderNumber = $orderNumber ? $orderNumber + 1 : 1;
+          $order->order_number = 'RJ' . str_pad($nextOrderNumber, 5, '0', STR_PAD_LEFT);
+          $order->status_order_id = StatusOrder::PEDIDO_RECIBIDO;
+        });
+    }
 }

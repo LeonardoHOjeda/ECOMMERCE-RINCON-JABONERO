@@ -13,5 +13,13 @@ class StatusOrder extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name'];
+    protected $fillable = [
+      'name',
+      'description'
+    ];
+
+    const PEDIDO_RECIBIDO = 1;
+    const PAGO_PENDIENTE = 2;
+    const PAGO_RECIBIDO = 3;
+    const PREPARANDO_ENVIO = 4;
 }

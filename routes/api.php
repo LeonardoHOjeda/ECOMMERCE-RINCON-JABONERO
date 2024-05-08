@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StatusOrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -57,7 +58,6 @@ Route::middleware(['auth:sanctum'])->group(function() {
   | CATEGORIAS
   |--------------------------------------------------------------------------
   */
-  // TODO: Cambiar a Model Binding
   Route::post('/category', [CategoryController::class, 'store']);
   Route::put('/category/{category}', [CategoryController::class, 'update']);
   Route::delete('/category/{category}', [CategoryController::class, 'destroy']);
@@ -71,4 +71,12 @@ Route::middleware(['auth:sanctum'])->group(function() {
   Route::post('/orders', [OrderController::class, 'store']);
   Route::get('/orders/{order}', [OrderController::class, 'show']);
   Route::put('/orders/{order}', [OrderController::class, 'update']);
+
+  /*
+  |--------------------------------------------------------------------------
+  | ESTATUS DE ORDENES
+  |--------------------------------------------------------------------------
+  */
+  Route::get('/status-orders', [StatusOrderController::class, 'index']);
+  Route::post('/status-orders', [StatusOrderController::class, 'store']);
 });

@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -26,21 +27,18 @@ class OrderController extends Controller
     public function store(Request $request)
     {
       $body = $request->validate([
-        'order_total' => 'required|numeric',
         'tracking_number' => 'required',
-        'user_id' => 'required|numeric',
-        'status_order_id' => 'required|numeric'
+        'products' => 'required|array',
+        'products.*.product_id' => 'required|integer',
+        'products.*.quantity' => 'required|numeric'
       ]);
       
-      Gate::authorize('create', [Order::class, User::findOrFail($body['user_id'])]);
-      
       // Obtener el último número de orden
-      $lastOrderNumber = Order::max('order_number');
-      $orderNumber = $lastOrderNumber ? substr($lastOrderNumber, 2) : null;
-      $nextOrderNumber = $orderNumber ? $orderNumber + 1 : 1;
 
-      $body['order_number'] = 'RJ' . str_pad($nextOrderNumber, 5, '0', STR_PAD_LEFT);
-      $order = Order::create($body);
+      $order = Auth::user()->orders()->create($body);
+      $order->products()->createMany($body['products']);
+      $orderTotal = $order->products()->sum('subtotal');
+      $order->update(['order_total' => $orderTotal]);
 
       return $order;
     }
@@ -67,7 +65,6 @@ class OrderController extends Controller
       $body = $request->validate([
         'order_total' => 'numeric',
         'tracking_number' => 'string',
-        'user_id' => 'integer',
         'status_order_id' => 'integer'
       ]);
 
